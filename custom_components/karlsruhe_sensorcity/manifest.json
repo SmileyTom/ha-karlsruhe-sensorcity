@@ -1,0 +1,10 @@
+{
+  "domain": "karlsruhe_sensorcity",
+  "name": "Karlsruhe Sensor City",
+  "version": "1.0.0",
+  "config_flow": true,
+  "documentation": "https://geoportal.karlsruhe.de/sensorcity/Dashboard/",
+  "requirements": [],
+  "codeowners": [],
+  "iot_class": "cloud_polling"
+}

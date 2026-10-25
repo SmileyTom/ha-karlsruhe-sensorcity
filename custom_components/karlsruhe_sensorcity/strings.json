@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Karlsruhe Sensor City",
+        "description": "Sensor-Nummer eingeben (z.B. 154 für Wind, 155 für Temperatur)",
+        "data": {
+          "name_prefix": "Sensor-Nummer (Präfix des Namens)",
+          "sensor_type": "Sensor-Typ"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Geoportal fehlgeschlagen",
+      "sensor_not_found": "Kein Sensor mit dieser Nummer gefunden"
+    },
+    "abort": {
+      "already_configured": "Dieser Sensor ist bereits konfiguriert"
+    }
+  }
+}
