@@ -1,8 +1,15 @@
 """Sensor platform for Karlsruhe Sensor City."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from collections.abc import Callable
+from dataclasses import dataclass, field
 from typing import Any
+
+_COMPASS = ["N", "NNO", "NO", "ONO", "O", "OSO", "SO", "SSO", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+
+
+def _degrees_to_compass(degrees: Any) -> str:
+    return _COMPASS[round(float(degrees) / 22.5) % 16]
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -31,6 +38,7 @@ from .coordinator import SensorCityCoordinator
 class SensorCityEntityDescription(SensorEntityDescription):
     attribute_key: str
     factor: float = 1.0
+    value_fn: Callable[[Any], Any] | None = None
 
 
 WIND_SENSORS: tuple[SensorCityEntityDescription, ...] = (
@@ -51,6 +59,13 @@ WIND_SENSORS: tuple[SensorCityEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:compass-rose",
         suggested_display_precision=0,
+    ),
+    SensorCityEntityDescription(
+        key="wind_direction_text",
+        attribute_key="wind_direction_degree",
+        name="Windrichtung (Text)",
+        icon="mdi:compass-rose",
+        value_fn=_degrees_to_compass,
     ),
     SensorCityEntityDescription(
         key="windgust_1s_kmh",
@@ -163,4 +178,6 @@ class SensorCityEntity(CoordinatorEntity[SensorCityCoordinator], SensorEntity):
         raw = self.coordinator.data.get(self.entity_description.attribute_key)
         if raw is None:
             return None
+        if self.entity_description.value_fn is not None:
+            return self.entity_description.value_fn(raw)
         return round(float(raw) * self.entity_description.factor, 6)

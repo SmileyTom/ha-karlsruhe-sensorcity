@@ -1,7 +1,7 @@
 {
   "domain": "karlsruhe_sensorcity",
   "name": "Karlsruhe Sensor City",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "config_flow": true,
   "documentation": "https://geoportal.karlsruhe.de/sensorcity/Dashboard/",
   "requirements": [],
